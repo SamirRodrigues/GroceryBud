@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
-import { FaBullseye } from 'react-icons/fa'
 
 const getLocalStorage = () => {
   let list = localStorage.getItem('list')
@@ -14,7 +13,9 @@ const getLocalStorage = () => {
 
 function App() {
   // Hooks
-  const [name, setName] = useState('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+
   const [list, setList] = useState(getLocalStorage())
   const [isEditing, setIsEditing] = useState(false)
   const [editID, setEditID] = useState(null)
@@ -23,18 +24,21 @@ function App() {
   //Functions
   const handleSubmit = e => {
     e.preventDefault()
-    if (!name) {
+    if (!title) {
       showAlert(true, 'danger', 'please enter value')
-    } else if (name && isEditing) {
+    } else if (title && isEditing) {
       setList(
         list.map(item => {
           if (item.id === editID) {
-            return { ...item, title: name }
+            return { ...item, title: title, description: description }
           }
           return item
         })
       )
-      setName('')
+
+      setTitle('')
+      setDescription('')
+
       setEditID(null)
       setIsEditing(false)
       showAlert(true, 'success', 'value changed')
@@ -42,10 +46,14 @@ function App() {
       showAlert(true, 'success', 'item added to the list')
       const newItem = {
         id: new Date().getTime().toString(),
-        title: name
+        title: title,
+        description: description
       }
+
       setList([...list, newItem])
-      setName('')
+      setTitle('')
+      setDescription('')
+
     }
   }
 
@@ -66,7 +74,10 @@ function App() {
     const specificItem = list.find(item => item.id === id)
     setIsEditing(true)
     setEditID(id)
-    setName(specificItem.title)
+
+    setTitle(specificItem.title)
+    setDescription(specificItem.description)
+
   }
 
   useEffect(() => {
@@ -79,13 +90,21 @@ function App() {
       <form className="grocery-form" onSubmit={handleSubmit}>
         {alert.show && <Alert {...alert} removeAlert={showAlert} />}
         <h3>Grocery bud</h3>
+        
         <div className="form-control">
           <input
             type="text"
             className="grocery"
-            placeholder="e. g. eggs"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            placeholder="title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            className="grocery"
+            placeholder="description"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
           />
           <button type="submit" className="submit-btn">
             {isEditing ? 'edit' : 'submit'}

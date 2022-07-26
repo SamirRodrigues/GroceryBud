@@ -249,7 +249,6 @@ Grocery List
   transition: var(--transition);
   padding: 0.25rem 1rem;
   border-radius: var(--radius);
-  text-transform: capitalize;
 }
 .grocery-item:hover {
   color: var(--clr-grey-5);
