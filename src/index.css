@@ -200,6 +200,8 @@ Grocery List
 .form-control {
   display: flex;
   justify-content: center;
+  text-align: center;
+  margin: 5px;
 }
 .grocery {
   padding: 0.25rem;
@@ -221,6 +223,7 @@ Grocery List
   border-color: transparent;
   flex: 0 0 5rem;
   display: grid;
+  width: 100%;
   align-items: center;
   padding: 0.25rem;
   text-transform: capitalize;
@@ -249,6 +252,7 @@ Grocery List
   transition: var(--transition);
   padding: 0.25rem 1rem;
   border-radius: var(--radius);
+  box-shadow: var(--light-shadow);
 }
 .grocery-item:hover {
   color: var(--clr-grey-5);
@@ -262,6 +266,16 @@ Grocery List
   color: var(--clr-grey-1);
   letter-spacing: 2px;
   transition: var(--transition);
+}
+.description{
+  margin-bottom: 0;
+  color: var(--clr-grey-1);
+  letter-spacing: 2px;
+  transition: var(--transition);
+  font-size: small;
+  text-align: left;
+  text-transform: capitalize;
+;
 }
 .edit-btn,
 .delete-btn {

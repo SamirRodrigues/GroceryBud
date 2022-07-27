@@ -15,6 +15,7 @@ function App() {
   // Hooks
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [price, setPrice] = useState(0)
 
   const [list, setList] = useState(getLocalStorage())
   const [isEditing, setIsEditing] = useState(false)
@@ -30,7 +31,7 @@ function App() {
       setList(
         list.map(item => {
           if (item.id === editID) {
-            return { ...item, title: title, description: description }
+            return { ...item, title: title, description: description, price: price }
           }
           return item
         })
@@ -38,6 +39,7 @@ function App() {
 
       setTitle('')
       setDescription('')
+      setPrice(0)
 
       setEditID(null)
       setIsEditing(false)
@@ -47,12 +49,14 @@ function App() {
       const newItem = {
         id: new Date().getTime().toString(),
         title: title,
-        description: description
+        description: description,
+        price:price
       }
 
       setList([...list, newItem])
       setTitle('')
       setDescription('')
+      setPrice(0)
 
     }
   }
@@ -77,6 +81,7 @@ function App() {
 
     setTitle(specificItem.title)
     setDescription(specificItem.description)
+    setPrice(specificItem.price)
 
   }
 
@@ -89,7 +94,7 @@ function App() {
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
         {alert.show && <Alert {...alert} removeAlert={showAlert} />}
-        <h3>Grocery bud</h3>
+        <h3>Products</h3>
         
         <div className="form-control">
           <input
@@ -99,6 +104,8 @@ function App() {
             value={title}
             onChange={e => setTitle(e.target.value)}
           />
+        </div>
+        <div className="form-control">
           <input
             type="text"
             className="grocery"
@@ -106,13 +113,22 @@ function App() {
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
-          <button type="submit" className="submit-btn">
-            {isEditing ? 'edit' : 'submit'}
-          </button>
         </div>
+        <div className="form-control">
+          <input
+              type="number"
+              className="grocery"
+              placeholder="price"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="submit-btn">
+          {isEditing ? 'edit' : 'submit'}
+        </button>
       </form>
       {list.length > 0 && (
-        <div className="drocery-container">
+        <div className="grocery-container">
           <List
             items={list}
             removeItem={removeItem}

@@ -4,11 +4,14 @@ const List = ({ items, removeItem, editItem }) => {
   return (
     <div className="grocery-list">
       {items.map(item => {
-        const { id, title, description } = item
+        const { id, title, description, price } = item
         return (
           <article key={id} className="grocery-item">
-            <p className="title">{title}</p>
-            <p className="title">{description}</p>
+            <div>
+              <p className="title">{title}</p>
+              <p className="description">{description}</p>
+              <p className="title">R$ {price}</p>
+            </div>
             <div className="btn-container">
               <button
                 type="button"
